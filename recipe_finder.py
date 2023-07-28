@@ -29,8 +29,8 @@ def get_top_5_recipes():
                 recipe_link = recipe["url"]
                 image_url = recipe["image"]
 
-                label = tk.Label(canvas_frame, text=f"{i+1}. {recipe_name}", font=("Helvetica", 12, "bold"))
-                label.pack(pady=(5, 0), anchor=tk.CENTER)  # Add vertical padding between recipes
+                recipe_title_label = tk.Label(canvas_frame, text=f"{i+1}. {recipe_name}", font=("Helvetica", 12, "bold"))
+                recipe_title_label.pack(pady=(5, 0), anchor=tk.CENTER)
 
                 image_response = requests.get(image_url, stream=True)
                 image = Image.open(image_response.raw)
@@ -42,8 +42,9 @@ def get_top_5_recipes():
 
                 link_label = tk.Label(canvas_frame, text=recipe_link, fg="blue", cursor="hand2")
                 link_label.pack(pady=(0, 10), anchor=tk.CENTER)  
+                link_label.bind("<Button-1>", lambda event, link=recipe_link: open_link(link))
 
-                recipe_labels.append(label)
+                recipe_labels.append(recipe_title_label)
                 recipe_images.append(photo_image)
                 recipe_links.append(link_label)
 
